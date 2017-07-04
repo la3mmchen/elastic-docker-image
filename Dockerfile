@@ -1,6 +1,23 @@
-FROM docker.elastic.co/elasticsearch/elasticsearch:5.4.0
-ADD elasticsearch.yml /usr/share/elasticsearch/config/
-USER root
-RUN chown elasticsearch:elasticsearch config/elasticsearch.yml
-USER elasticsearch
+FROM valerianomanassero/java-centos:latest
 
+RUN rpm --import http://packages.elastic.co/GPG-KEY-elasticsearch
+ADD elasticsearch.repo /etc/yum.repos.d/elasticsearch.repo
+RUN yum -y install elasticsearch-5.4.0-1 sudo unzip
+RUN yum -y clean all
+ADD elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
+ADD log4j2.properties /etc/elasticsearch/log4j2.properties
+ADD jvm.options /etc/elasticsearch/jvm.options
+ADD sudoers /etc/sudoers
+USER root
+RUN chown elasticsearch:elasticsearch /etc/elasticsearch/elasticsearch.yml
+RUN mkdir /var/data
+ADD elasticsearch-prometheus-exporter-5.4.0.0.zip /opt/elasticsearch-prometheus-exporter-5.4.0.0.zip
+ADD elasticsearch-prometheus-exporter-5.4.2.0.zip /opt/elasticsearch-prometheus-exporter-5.4.2.0.zip
+ADD elasticsearch-prometheus-exporter-5.4.3.0.zip /opt/elasticsearch-prometheus-exporter-5.4.3.0.zip
+RUN chown elasticsearch:elasticsearch /var/data
+RUN /usr/share/elasticsearch/bin/elasticsearch-plugin  install -b https://distfiles.compuscene.net/elasticsearch/elasticsearch-prometheus-exporter-5.4.0.0.zip
+COPY docker-entrypoint.sh /
+RUN chmod 755 /docker-entrypoint.sh
+USER elasticsearch
+EXPOSE 9200
+ENTRYPOINT ["/docker-entrypoint.sh"]
