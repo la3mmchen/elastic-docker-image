@@ -11,9 +11,6 @@ ADD sudoers /etc/sudoers
 USER root
 RUN chown elasticsearch:elasticsearch /etc/elasticsearch/elasticsearch.yml
 RUN mkdir /var/data
-ADD elasticsearch-prometheus-exporter-5.4.0.0.zip /opt/elasticsearch-prometheus-exporter-5.4.0.0.zip
-ADD elasticsearch-prometheus-exporter-5.4.2.0.zip /opt/elasticsearch-prometheus-exporter-5.4.2.0.zip
-ADD elasticsearch-prometheus-exporter-5.4.3.0.zip /opt/elasticsearch-prometheus-exporter-5.4.3.0.zip
 RUN chown elasticsearch:elasticsearch /var/data
 RUN /usr/share/elasticsearch/bin/elasticsearch-plugin  install -b https://distfiles.compuscene.net/elasticsearch/elasticsearch-prometheus-exporter-5.4.0.0.zip
 COPY docker-entrypoint.sh /
