@@ -2,4 +2,6 @@ cluster.name: "elasticsearch.local"
 network.host: 0.0.0.0
 discovery.zen.minimum_master_nodes: 1
 # turn it off
-xpack.security.enabled: false
+# xpack.security.enabled: false
+path.logs: '/var/log/elasticsearch'
+path.data: '/var/data'
