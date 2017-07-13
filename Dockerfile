@@ -12,8 +12,8 @@ USER root
 RUN chown elasticsearch:elasticsearch /etc/elasticsearch/elasticsearch.yml
 RUN mkdir /var/data
 RUN chown elasticsearch:elasticsearch /var/data
-RUN chmod -R 0775 /var/log/elasticsearch
-RUN chmod -R 0775 /var/data
+RUN chmod -R 0777 /var/log/elasticsearch
+RUN chmod -R 0777 /var/data
 RUN /usr/share/elasticsearch/bin/elasticsearch-plugin  install -b https://distfiles.compuscene.net/elasticsearch/elasticsearch-prometheus-exporter-5.4.0.0.zip
 COPY docker-entrypoint.sh /
 RUN chmod 755 /docker-entrypoint.sh
