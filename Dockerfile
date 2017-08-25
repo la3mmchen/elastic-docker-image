@@ -2,7 +2,7 @@ FROM valerianomanassero/java-centos:latest
 
 RUN rpm --import http://packages.elastic.co/GPG-KEY-elasticsearch
 ADD elasticsearch.repo /etc/yum.repos.d/elasticsearch.repo
-RUN yum -y install elasticsearch-5.4.0-1 sudo unzip
+RUN yum -y install elasticsearch-5.5.2-1 sudo unzip
 RUN yum -y clean all
 ADD elasticsearch.yml /etc/elasticsearch/elasticsearch.yml
 ADD log4j2.properties /etc/elasticsearch/log4j2.properties
